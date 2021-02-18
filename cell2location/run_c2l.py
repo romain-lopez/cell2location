@@ -19,7 +19,7 @@ from cell2location.cluster_averages import get_cluster_averages
 from cell2location.cluster_averages import select_features
 import cell2location.plt as c2lpl
 from cell2location.models.pymc3_loc_model import Pymc3LocModel
-import cell2location.models as models
+from cell2location.models import LocationModelLinearDependentW, LocationModelLinearDependentWMultiExperiment
 
 
 def save_plot(path, filename, extension='png'):
@@ -316,10 +316,10 @@ def run_cell2location(sc_data, sp_data, model_name=None,
         sample_name = sp_data.obs[train_args['sample_name_col']]
         sample_n = len(np.unique(sample_name))
         if sample_n == 1:
-            Model = models.LocationModelLinearDependentW
+            Model = LocationModelLinearDependentW
             model_name = 'LocationModelLinearDependentW'
         elif sample_n > 1:
-            Model = models.LocationModelLinearDependentWMultiExperiment
+            Model = LocationModelLinearDependentWMultiExperiment
             model_name = 'LocationModelLinearDependentWMultiExperiment'
         else:
             ValueError("train_args['sample_name_col'] point to invalid column")
